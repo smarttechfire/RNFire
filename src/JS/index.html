@@ -1,0 +1,42 @@
+<html>
+
+<head></head>
+
+<body>
+    <h3> JavaScript Programming - Event Handling</h3>
+    <hr />
+
+    <fieldset>
+        <legend>User Login</legend>
+        User Name : <input type="text" id="t1" />
+        <br /><br />
+        Password : <input type="password" id="t2" />
+        <br /><br />
+        <input type="button" value="Login" onclick="buttonClick()" />
+        <p id="p1"></p>
+    </fieldset>
+
+    <script>
+
+        function buttonClick() {
+            var txtObj1 = document.getElementById("t1").value;
+            var txtObj2 = document.getElementById("t2").value;
+            var paraObj = document.getElementById("p1");
+
+
+            if (txtObj1 == "admin" && txtObj2 == "admin123") {
+                paraObj.innerText = "Welcome to Admin";
+            }
+            else {
+                paraObj.innerText = "Invalid User Id or Password";
+            }
+
+
+        }		
+    </script>
+
+
+
+</body>
+
+</html>
