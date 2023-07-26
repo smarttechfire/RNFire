@@ -81,6 +81,8 @@ To learn more about React Native, take a look at the following resources:
 <!-- ============================================= My Steps ============================================= -->
 <!-- ============================================= Firebase Steps ======================================= -->
 
+- [React Native Firebase](https://rnfirebase.io/) - learn more about React Native Firebase
+
 ## Firebase Setup Steps
 
 **Open Firebase Console**
@@ -146,3 +148,67 @@ console.log('That email address is already in use!');
     console.error(error);
 
 });
+
+## Listening to authentication state
+
+---
+
+In most scenarios using Authentication, you will want to know whether your users are currently signed-in or signed-out of your application. The module provides a method called **onAuthStateChanged** which allows you to subscribe to the users current authentication state, and receive an event whenever that state changes.
+
+---
+
+It is important to remember the `onAuthStateChanged` listener is asynchronous and will trigger an initial state once a connection with Firebase has been established. Therefore it is important to setup an "initializing" state which blocks render of our main application whilst the connection is established:
+
+---
+
+---
+
+                                                        **Smaple Code**
+
+---
+
+```
+import React, { useState, useEffect } from 'react';
+import { View, Text } from 'react-native';
+import auth from '@react-native-firebase/auth';
+
+function App() {
+  // Set an initializing state whilst Firebase connects
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+
+  // Handle user state changes
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
+  if (initializing) return null;
+
+  if (!user) {
+    return (
+      <View>
+        <Text>Login</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View>
+      <Text>Welcome {user.email}</Text>
+    </View>
+  );
+}
+
+```
+
+If the `user` returned within the handler is `null` we assume the `user` is currently signed-out, otherwise they are signed-in and a User interface is returned.
+
+---
+
+The `onAuthStateChanged` method also returns an unsubscriber function which allows us to stop listening for events whenever the hook is no longer in use.
