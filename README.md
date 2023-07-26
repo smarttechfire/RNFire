@@ -273,3 +273,17 @@ async function onGoogleButtonPress() {
 }
 
 ```
+
+- [Phone Authentication](https://rnfirebase.io/auth/phone-auth)
+
+> Sign-in users with their phone number.
+
+## Android Setup
+
+Ensure that all parts of step 1 and 2 from the official firebase Android phone auth docs have been followed.
+
+To bypass Play Integrity for manual testing, you may force reCAPTCHA to be used prior to calling `verifyPhoneNumber`.
+
+## Sign-in
+
+The module provides a `signInWithPhoneNumber` method which accepts a phone number. Firebase sends an SMS message to the user with a code, which they must then confirm. The `signInWithPhoneNumber` method returns a confirmation method which accepts a code. Based on whether the code is correct for the device, the method rejects or resolves.

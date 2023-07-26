@@ -1,7 +1,6 @@
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {View, Button, StyleSheet} from 'react-native';
 import React from 'react';
 import {
-  GoogleSign,
   GoogleSignin,
 } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
@@ -28,6 +27,7 @@ const GoogleLogin = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
+    marginBottom: 20,
   },
 });
 
