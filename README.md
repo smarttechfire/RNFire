@@ -129,6 +129,7 @@ implementation 'com.google.firebase:firebase-analytics'
 -Ensure the "Email/Password" sign-in provider is enabled on the Firebase Console.
 -The createUserWithEmailAndPassword performs two operations; first creating the user if they do not already exist, and then signing them in.
 
+```
 import auth from '@react-native-firebase/auth';
 
 auth()
@@ -148,6 +149,7 @@ console.log('That email address is already in use!');
     console.error(error);
 
 });
+```
 
 ## Listening to authentication state
 
@@ -163,7 +165,7 @@ It is important to remember the `onAuthStateChanged` listener is asynchronous an
 
 ---
 
-                                          **Smaple Code**
+**Smaple Code**
 
 ```
 import React, { useState, useEffect } from 'react';
