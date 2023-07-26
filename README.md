@@ -163,9 +163,7 @@ It is important to remember the `onAuthStateChanged` listener is asynchronous an
 
 ---
 
-                                                        **Smaple Code**
-
----
+                                          **Smaple Code**
 
 ```
 import React, { useState, useEffect } from 'react';
