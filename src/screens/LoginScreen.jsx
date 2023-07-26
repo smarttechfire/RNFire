@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
+import GoogleLogin from './GoogleLogin';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -52,6 +53,7 @@ const LoginScreen = () => {
       <TouchableOpacity onPress={onLogin} style={styles.register}>
         <Text style={styles.registerTitle}>Login</Text>
       </TouchableOpacity>
+      <GoogleLogin />
     </View>
   );
 };

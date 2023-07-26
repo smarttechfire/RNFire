@@ -129,6 +129,8 @@ implementation 'com.google.firebase:firebase-analytics'
 -Ensure the "Email/Password" sign-in provider is enabled on the Firebase Console.
 -The createUserWithEmailAndPassword performs two operations; first creating the user if they do not already exist, and then signing them in.
 
+**smaple code**
+
 ```
 import auth from '@react-native-firebase/auth';
 
@@ -212,3 +214,62 @@ If the `user` returned within the handler is `null` we assume the `user` is curr
 ---
 
 The `onAuthStateChanged` method also returns an unsubscriber function which allows us to stop listening for events whenever the hook is no longer in use.
+
+## Google
+
+The `google-signin` library provides a wrapper around the official Google login library, allowing you to create a credential and sign-in to Firebase.
+
+Most configuration is already setup when using `Google Sign-In` with Firebase, however you need to ensure your machines `SHA1 key` has been configured for use with Android. You can see how to generate the key on the `Getting Started` documentation.
+
+Ensure the "Google" sign-in provider is enabled on the `Firebase Console`.
+
+Follow these instructions to install and setup `google-signin`
+
+Before triggering a sign-in request, you must initialize the Google SDK using your any required scopes and the `webClientId`, which can be found in the `android/app/google-services.json` file as the `client/oauth_client/client_id` property (the id ends with `.apps.googleusercontent.com`). Make sure to pick the `client_id` with `client_type: 3`
+
+```
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+
+GoogleSignin.configure({
+  webClientId: '',
+});
+
+```
+
+Once initialized, setup your application to trigger a sign-in request with Google using the signIn method.
+
+```
+import React from 'react';
+import { Button } from 'react-native';
+
+function GoogleSignIn() {
+  return (
+    <Button
+      title="Google Sign-In"
+      onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}
+    />
+  );
+}
+
+```
+
+The `onGoogleButtonPress` can then be implemented as follows:
+
+```
+import auth from '@react-native-firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+
+async function onGoogleButtonPress() {
+  // Check if your device supports Google Play
+  await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+  // Get the users ID token
+  const { idToken } = await GoogleSignin.signIn();
+
+  // Create a Google credential with the token
+  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+  // Sign-in the user with the credential
+  return auth().signInWithCredential(googleCredential);
+}
+
+```
